@@ -1,0 +1,19 @@
+{
+  "fitbit": {
+    "appUUID": "525a3e73-0cb4-4fbf-b001-53bd4f9e9644",
+    "appType": "app",
+    "appDisplayName": "Timer",
+    "iconFile": "resources/icon.png",
+    "wipeColor": "#607d8b",
+    "requestedPermissions": [],
+    "buildTargets": [
+      "higgs",
+      "meson"
+    ],
+    "i18n": {
+      "en": {
+        "name": "Timer"
+      }
+    }
+  }
+}
