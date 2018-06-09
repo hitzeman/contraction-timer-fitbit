@@ -1,29 +1,45 @@
 <svg>
-  <text id="timer">0</text>
-    <!-- TOP LEFT 
-    <use id="btn-tl" href="#combo-button-upper-left" fill="fb-cyan">
-      <set href="combo-button-icon" attributeName="href" to="cog.png"/>
-      <set href="combo-button-icon-press" attributeName="href" to="cog_press.png"/>
+  <use id="container" href="#panoramaview">
+    <use id="item1" href="#panoramaview-item">
+      <textarea id="timer" display-align="center" x="21%">00:00</textarea>
+
+      <!-- TOP LEFT 
+      <use id="btn-tl" href="#combo-button-upper-left" fill="fb-cyan">
+        <set href="combo-button-icon" attributeName="href" to="cog.png"/>
+        <set href="combo-button-icon-press" attributeName="href" to="cog_press.png"/>
+      </use>
+      -->
+        <!-- TOP RIGHT 
+      <use id="btn-tr" href="#combo-button-upper-right" fill="fb-red">
+        <set href="combo-button-icon" attributeName="href" to="list.png"/>
+        <set href="combo-button-icon-press" attributeName="href" to="list_press.png"/>
+        <set href="combo-button-stroke" attributeName="display" to="inline"/>
+      </use> 
+
+      <!-- BOTTOM RIGHT -->
+        <use id="btn-br" href="#combo-button-lower-right" fill="fb-white">
+          <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_play_p.png" />
+          <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_play_press_p.png" />
+          <set href="combo-button-stroke" attributeName="display" to="inline" />
+        </use>
+        <!-- BOTTOM LEFT 
+      <use id="btn-bl" href="#combo-button-lower-left" fill="fb-white">
+        <set href="combo-button-icon" attributeName="href" to="headphone.png"/>
+        <set href="combo-button-icon-press" attributeName="href" to="headphone_press.png"/>
+        <set href="combo-button-stroke" attributeName="display" to="inline"/>
+      </use>
+      -->
     </use>
-    -->
-    <!-- TOP RIGHT 
-    <use id="btn-tr" href="#combo-button-upper-right" fill="fb-red">
-      <set href="combo-button-icon" attributeName="href" to="list.png"/>
-      <set href="combo-button-icon-press" attributeName="href" to="list_press.png"/>
-      <set href="combo-button-stroke" attributeName="display" to="inline"/>
-    </use> 
-    -->
-    <!-- BOTTOM RIGHT -->
-    <use id="btn-br" href="#combo-button-lower-right" fill="fb-white">
-      <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_play_p.png"/>
-      <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_play_press_p.png"/>
-      <set href="combo-button-stroke" attributeName="display" to="inline"/>
+    <use id="item2" href="#panoramaview-item">
+      <use id="tiles" href="#tile-list">
+        <use href="#tile-list-header" class="tile-list-item">
+          <text id="timer">Header</text>
+        </use>
+      </use>
     </use>
-    <!-- BOTTOM LEFT 
-    <use id="btn-bl" href="#combo-button-lower-left" fill="fb-white">
-      <set href="combo-button-icon" attributeName="href" to="headphone.png"/>
-      <set href="combo-button-icon-press" attributeName="href" to="headphone_press.png"/>
-      <set href="combo-button-stroke" attributeName="display" to="inline"/>
+    <use id="pagination-dots" href="#pagination-widget" y="2">
+      <use href="#pagination-dot" />
+      <use href="#pagination-highlight-dot" />
     </use>
-    -->
+  </use>
 </svg>
