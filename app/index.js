@@ -5,37 +5,79 @@ import document from "document";
 let active = false;
 const seconds = 0;
 const contractions = [];
-let contractionStart, contractionStop;
+let intervalStart, intervalStop;
 
 /* Element References */
-let timer = document.getElementById("timer");
 let btnBR = document.getElementById("btn-br");
-let btnBRIcon = document.getElementById("combo-button-icon");
-let btnBrIconPress = document.getElementById("combo-button-icon-press");
+let btnBRIcon = btnBR.getElementById("combo-button-icon");
+let btnBrIconPress = btnBR.getElementById("combo-button-icon-press");
+let btnCancel = document.getElementById("btnCancel");
+let btnReset = document.getElementById("btnReset");
+let btnTR = document.getElementById("btn-tr");
+let container = document.getElementById("container");
+let resetPopup = document.getElementById("reset-popup");
+let timer = document.getElementById("timer");
 
 /* Event Handlers */
-btnBR.onactivate = function() {
+btnBR.onactivate = function () {
   if (active) {
     activate(false);
-    timeContraction(false);
-    
-    contractions.push({start: contractionStart, stop: contractionStop, seconds: seconds});
+    timeInterval(false);
+
+    contractions.push({
+      start: intervalStart,
+      stop: intervalStop,
+      seconds: seconds
+    });
     console.log(JSON.stringify(contractions));
 
-    seconds = 0;
-    timer.textContent = formatTime(0);
+    resetTimer();
   } else {
     activate(true);
-    timeContraction(true);
+    timeInterval(true);
+  }
+  
+  displayResetButton(contractions.length && !active);
+}
+
+btnTR.onactivate = function() {
+  resetTimer();
+  renderView("popup");
+}
+
+btnCancel.onclick = function(e) {
+  renderView("container");
+}
+
+btnReset.onclick = function(e) {
+  contractions = [];
+  renderView("container");
+  displayResetButton(false);
+}
+
+function displayResetButton(renderFlag) {
+  btnTR.style.display = renderFlag ? "inline" : "none";
+}
+
+function renderView(view) {
+  switch (view) {
+    case "container": 
+      resetPopup.style.display = "none";
+      container.style.display = "inline";
+      break;
+    case "popup": 
+      container.style.display = "none";
+      resetPopup.style.display = "inline";
+      break;   
   }
 }
 
 function activate(activeFlag) {
   active = !active;
   if (activeFlag) {
-    contractionStart = new Date();
+    intervalStart = new Date();
   } else {
-    contractionStop = new Date();
+    intervalStop = new Date();
   }
   
   const buttonMode = active ? 'pause' : 'play';
@@ -44,10 +86,10 @@ function activate(activeFlag) {
   btnBrIconPress.image = `icons/btn_combo_${buttonMode}_press_p.png`;
 }
 
-function timeContraction(timeFlag) {
+function timeInterval(timeFlag) {
   if (timeFlag) {
     clock.granularity = "seconds";
-    clock.ontick = () => {
+    clock.ontick = function() {
       seconds++;
       timer.textContent = formatTime(seconds);
     }
@@ -57,8 +99,13 @@ function timeContraction(timeFlag) {
   }
 }
 
+function resetTimer() {
+  seconds = 0;
+  timer.textContent = formatTime(seconds);
+}
+
 function formatTime(seconds) {
-    return new Date(seconds * 1000).toISOString().substr(14, 5);
+  return new Date(seconds * 1000).toISOString().substr(14, 5);
 }
 
 
