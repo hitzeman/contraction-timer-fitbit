@@ -1,7 +1,7 @@
 <svg>
   <use id="container" href="#panoramaview">
     <use id="item1" href="#panoramaview-item">
-      <textarea id="timer" display-align="center" x="21%">00:00</textarea>
+      <textarea id="timer">00:00</textarea>
 
       <!-- TOP LEFT 
       <use id="btn-tl" href="#combo-button-upper-left" fill="fb-cyan">
@@ -21,6 +21,7 @@
         <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_play_press_p.png" />
         <set href="combo-button-stroke" attributeName="display" to="inline" />
       </use>
+      <text id="previous" display="none">00:01</text>
     </use>
     <use id="item2" href="#panoramaview-item">
       <use id="tiles" href="#tile-list">

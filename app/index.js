@@ -8,15 +8,16 @@ const contractions = [];
 let intervalStart, intervalStop;
 
 /* Element References */
-let btnBR = document.getElementById("btn-br");
-let btnBRIcon = btnBR.getElementById("combo-button-icon");
-let btnBrIconPress = btnBR.getElementById("combo-button-icon-press");
-let btnCancel = document.getElementById("btnCancel");
-let btnReset = document.getElementById("btnReset");
-let btnTR = document.getElementById("btn-tr");
-let container = document.getElementById("container");
-let resetPopup = document.getElementById("reset-popup");
-let timer = document.getElementById("timer");
+const btnBR = document.getElementById("btn-br");
+const btnBRIcon = btnBR.getElementById("combo-button-icon");
+const btnBrIconPress = btnBR.getElementById("combo-button-icon-press");
+const btnCancel = document.getElementById("btnCancel");
+const btnReset = document.getElementById("btnReset");
+const btnTR = document.getElementById("btn-tr");
+const container = document.getElementById("container");
+const previous = document.getElementById("previous");
+const resetPopup = document.getElementById("reset-popup");
+const timer = document.getElementById("timer");
 
 /* Event Handlers */
 btnBR.onactivate = function () {
@@ -37,7 +38,8 @@ btnBR.onactivate = function () {
     timeInterval(true);
   }
   
-  displayResetButton(contractions.length && !active);
+  displayElement(btnTR, contractions.length && !active)
+  renderPreviousInterval();
 }
 
 btnTR.onactivate = function() {
@@ -52,11 +54,19 @@ btnCancel.onclick = function(e) {
 btnReset.onclick = function(e) {
   contractions = [];
   renderView("container");
-  displayResetButton(false);
+  displayElement(btnTR, false);
+  displayElement(previous, false);
 }
 
-function displayResetButton(renderFlag) {
-  btnTR.style.display = renderFlag ? "inline" : "none";
+function displayElement(element, renderFlag) {
+  element.style.display = renderFlag ? "inline" : "none";
+}
+
+function renderPreviousInterval() {
+  displayElement(previous, contractions.length);
+  if (contractions.length) {
+    previous.textContent = formatTime(contractions[contractions.length - 1].seconds);
+  }
 }
 
 function renderView(view) {
