@@ -10,10 +10,9 @@
       </use>
       -->
       <!-- TOP RIGHT -->
-      <use id="btn-tr" href="#combo-button-upper-right" fill="fb-white" display="none">
-        <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_x_p.png" />
-        <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_x_press_p.png" />
-        <set href="combo-button-stroke" attributeName="display" to="inline" />
+      <use id="btn-tr" href="#combo-button-upper-right" fill="fb-black" display="none">
+        <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_reset_p.png" />
+        <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_reset_p.png" />
       </use>
       <!-- BOTTOM RIGHT -->
       <use id="btn-br" href="#combo-button-lower-right" fill="fb-white">
@@ -24,11 +23,60 @@
       <text id="previous" display="none">00:01</text>
     </use>
     <use id="item2" href="#panoramaview-item">
-      <use id="tiles" href="#tile-list">
-        <use href="#tile-list-header" class="tile-list-item">
-          <text id="timer">Header</text>
+      <svg width="95%" height="95%" x="2.5%" y="2.5%">
+        <defs>
+          <symbol id="stat">
+            <text id="tile-label" class="tile-label" x="5%" y="28%" ></text>
+            <text id="tile-value" x="5%" y="45%">Placeholder text for tile item</text>
+          </symbol>
+          <symbol id="contraction-tile" href="#tile-list-item" focusable="false" pointer-events="none" system-events="all" display="none">
+            <!-- REDO THIS -->
+            <section>
+              <use href="#stat" id="tile-start">
+                <set href="tile-label" attributeName="text-buffer" to="START" />
+                <set href="tile-value" attributeName="text-buffer" to="08:37:02" />
+              </use>         
+              <use href="#stat" id="tile-end" x="50%">
+                <set href="tile-label" attributeName="text-buffer" to="END" />
+                <set href="tile-value" attributeName="text-buffer" to="08:38:13" />
+              </use>
+              <use href="#stat" id="tile-duration" y="40%">
+                <set href="tile-label" attributeName="text-buffer" to="DURATION" />
+                <set href="tile-value" attributeName="text-buffer" to="01:43" />
+              </use>
+              <use href="#stat" id="tile-frequency" x="50%" y="40%">
+                <set href="tile-label" attributeName="text-buffer" to="FREQUENCY" />
+                <set href="tile-value" attributeName="text-buffer" to="05:00" />
+              </use>
+
+              <!--<text id="tile-end-label" x="5%" y="70%">END</text>
+              <text id="tile-end" x="5%" y="90%+6" display="none">Placeholder text for tile item</text>-->
+            </section>
+            <section>
+              <rect id="tile-divider-bottom" class="tile-divider-bottom" y="100%-2"/>
+            </section>
+              <!--<text id="tile-end" display="none" width="50%" height="50%" x="50%" y="25%">Placeholder text for tile item</text>
+              <text id="tile-length" display="none" width="50%" height="50%" x="0" y="70%">Placeholder text for tile item</text>
+              <text id="tile-frequency" display="none" width="50%" height="50%" x="50%" y="70%">Placeholder text for tile item</text>-->
+          </symbol>
+        </defs>
+        <use id="tiles" href="#tile-list">
+          <var id="virtual" value="1" />
+          <var id="reorder-enabled" value="0" />
+          <use id="contraction-pool" href="#tile-list-pool">
+            <use id="contraction-pool[0]" href="#contraction-tile" class="tile-list-item" />
+            <use id="contraction-pool[1]" href="#contraction-tile" class="tile-list-item" />
+            <use id="contraction-pool[2]" href="#contraction-tile" class="tile-list-item" />
+            <use id="contraction-pool[3]" href="#contraction-tile" class="tile-list-item" />
+            <use id="contraction-pool[4]" href="#contraction-tile" class="tile-list-item" />
+            <use id="contraction-pool[5]" href="#contraction-tile" class="tile-list-item" />
+            <use id="contraction-pool[6]" href="#contraction-tile" class="tile-list-item" />
+            <use id="contraction-pool[7]" href="#contraction-tile" class="tile-list-item" />
+            <use id="contraction-pool[8]" href="#contraction-tile" class="tile-list-item" />
+            <use id="contraction-pool[9]" href="#contraction-tile" class="tile-list-item" />
+          </use>
         </use>
-      </use>
+      </svg>
     </use>
     <use id="pagination-dots" href="#pagination-widget" y="2">
       <use href="#pagination-dot" />
