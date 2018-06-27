@@ -1,63 +1,77 @@
 <svg>
-  <use id="container" href="#panoramaview">
-    <use id="item1" href="#panoramaview-item">
+  <defs>
+    <symbol id="no-contractions">
+      <svg id="noContractions" viewport-fill="black">
+        <use href="#mixed-text-center-mid" height="100%" fill="fb-yellow">
+          <set href="#copy/text" attributeName="text-buffer" to="No contractions have been recorded." />
+        </use>
+      </svg>
+    </symbol>
+  </defs>
+  <use id="container" href="#panoramaview" display="none">
+    <use id="section-timer" href="#panoramaview-item">
       <textarea id="timer">00:00</textarea>
-
-      <!-- TOP LEFT 
-      <use id="btn-tl" href="#combo-button-upper-left" fill="fb-cyan">
-        <set href="combo-button-icon" attributeName="href" to="cog.png"/>
-        <set href="combo-button-icon-press" attributeName="href" to="cog_press.png"/>
-      </use>
-      -->
-      <!-- TOP RIGHT -->
       <use id="btn-tr" href="#combo-button-upper-right" fill="fb-black" display="none">
         <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_reset_p.png" />
         <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_reset_p.png" />
       </use>
-      <!-- BOTTOM RIGHT -->
       <use id="btn-br" href="#combo-button-lower-right" fill="fb-white">
         <set href="combo-button-icon" attributeName="href" to="icons/btn_combo_play_p.png" />
         <set href="combo-button-icon-press" attributeName="href" to="icons/btn_combo_play_press_p.png" />
         <set href="combo-button-stroke" attributeName="display" to="inline" />
       </use>
-      <text id="previous" display="none">00:01</text>
+      <text id="previous" display="none">00:00</text>
     </use>
-    <use id="item2" href="#panoramaview-item">
-      <svg width="95%" height="95%" x="2.5%" y="2.5%">
+    <use id="section-average" href="#panoramaview-item">
+      <use href="#no-contractions"></use>
+      <svg id="averages" display="none">
+        <use id="tile-average" href="#tile-list">
+          <use href="#tile-list-item" class="tile-list-item-avg">
+            <text>Contractions</text>
+            <text id="tile-average-contractions" x="55%">0</text>
+          </use>
+          <use href="#tile-list-item" class="tile-list-item-avg">
+            <text>Avg. Length</text>
+            <text id="tile-average-length" x="55%">00:00</text>
+          </use>
+          <use href="#tile-list-item" class="tile-list-item-avg">
+            <text>Frequency</text>
+            <text id="tile-average-frequency" x="55%">00:00</text>
+          </use>
+        </use>
+      </svg>
+    </use>
+    <use id="section-summary" href="#panoramaview-item">
+      <use href="#no-contractions"></use>
+      <svg id="contractionsSummary" width="95%" height="95%" x="2.5%" y="2.5%">
         <defs>
           <symbol id="stat">
-            <text id="tile-label" class="tile-label" x="5%" y="28%" ></text>
-            <text id="tile-value" x="5%" y="45%">Placeholder text for tile item</text>
+            <text id="tile-label" class="tile-label" x="5%" y="28%"></text>
+            <text id="tile-value" x="5%" y="45%"></text>
           </symbol>
           <symbol id="contraction-tile" href="#tile-list-item" focusable="false" pointer-events="none" system-events="all" display="none">
             <!-- REDO THIS -->
             <section>
               <use href="#stat" id="tile-start">
                 <set href="tile-label" attributeName="text-buffer" to="START" />
-                <set href="tile-value" attributeName="text-buffer" to="08:37:02" />
-              </use>         
+                <set href="tile-value" attributeName="text-buffer" to="00:00:00" />
+              </use>
               <use href="#stat" id="tile-end" x="50%">
                 <set href="tile-label" attributeName="text-buffer" to="END" />
-                <set href="tile-value" attributeName="text-buffer" to="08:38:13" />
+                <set href="tile-value" attributeName="text-buffer" to="00:00:00" />
               </use>
               <use href="#stat" id="tile-duration" y="40%">
                 <set href="tile-label" attributeName="text-buffer" to="DURATION" />
-                <set href="tile-value" attributeName="text-buffer" to="01:43" />
+                <set href="tile-value" attributeName="text-buffer" to="00:00" />
               </use>
               <use href="#stat" id="tile-frequency" x="50%" y="40%">
                 <set href="tile-label" attributeName="text-buffer" to="FREQUENCY" />
-                <set href="tile-value" attributeName="text-buffer" to="05:00" />
+                <set href="tile-value" attributeName="text-buffer" to="00:00" />
               </use>
-
-              <!--<text id="tile-end-label" x="5%" y="70%">END</text>
-              <text id="tile-end" x="5%" y="90%+6" display="none">Placeholder text for tile item</text>-->
             </section>
             <section>
-              <rect id="tile-divider-bottom" class="tile-divider-bottom" y="100%-2"/>
+              <rect id="tile-divider-bottom" class="tile-divider-bottom" y="100%-2" />
             </section>
-              <!--<text id="tile-end" display="none" width="50%" height="50%" x="50%" y="25%">Placeholder text for tile item</text>
-              <text id="tile-length" display="none" width="50%" height="50%" x="0" y="70%">Placeholder text for tile item</text>
-              <text id="tile-frequency" display="none" width="50%" height="50%" x="50%" y="70%">Placeholder text for tile item</text>-->
           </symbol>
         </defs>
         <use id="tiles" href="#tile-list">
@@ -78,16 +92,16 @@
         </use>
       </svg>
     </use>
-    <use id="pagination-dots" href="#pagination-widget" y="2">
+    <use id="pagination-dots" href="#pagination-widget" y="8">
+      <use href="#pagination-dot" />
+      <use href="#pagination-dot" />
+      <use href="#pagination-dot" />
       <use href="#pagination-dot" />
       <use href="#pagination-highlight-dot" />
     </use>
   </use>
   <svg id="reset-popup" display="none">
-    <!-- Black background -->
     <rect class="full-size" fill="fb-black" />
-
-    <!-- Title and text -->
     <use href="#mixed-text-center-mid" class="dialog-mixed-text" fill="fb-white">
       <set href="#top-padding" attributeName="display" to="none" />
       <set href="#header/text" attributeName="text-buffer" to="Are you sure?" />
@@ -95,17 +109,43 @@
       <set href="#copy/text" attributeName="text-buffer" to="All recorded contractions for this session will be cleared." />
       <set href="#bottom-padding" attributeName="display" to="none" />
     </use>
-
-    <!-- Left button -->
     <use id="btnCancel" class="dialog-half-button-left" href="#square-button-neutral">
       <set href="#text" attributeName="text-buffer" to="Cancel" />
       <set href="#text" attributeName="text-anchor" to="middle" />
     </use>
-
-    <!-- Right button -->
     <use id="btnReset" class="dialog-half-button-right" href="#square-button-negative">
       <set href="#text" attributeName="text-buffer" to="Reset" />
       <set href="#text" attributeName="text-anchor" to="middle" />
+    </use>
+  </svg>
+  <svg id="firstChild-popup" display="inline">
+    <rect class="full-size" fill="fb-black" />
+    <use href="#mixed-text-center-mid" class="dialog-mixed-text" fill="fb-white">
+      <set href="#top-padding" attributeName="display" to="none" />
+      <set href="#header/text" attributeName="text-buffer" to="Is this your first child?" />
+      <set href="#header/text" attributeName="fill" to="fb-magenta" />
+      <set href="#bottom-padding" attributeName="display" to="none" />
+    </use>
+    <use id="btnYes" class="dialog-half-button-left" href="#square-button-neutral">
+      <set href="#text" attributeName="text-buffer" to="Yes" />
+      <set href="#text" attributeName="text-anchor" to="middle" />
+    </use>
+    <use id="btnNo" class="dialog-half-button-right" href="#square-button-negative">
+      <set href="#text" attributeName="text-buffer" to="No" />
+      <set href="#text" attributeName="text-anchor" to="middle" />
+    </use>
+  </svg>
+  <svg id="notification-popup" display="none">
+    <rect class="full-size" fill="fb-black" />
+    <use href="#mixed-text-center-mid" class="dialog-mixed-text" fill="fb-white">
+      <set href="#top-padding" attributeName="display" to="none" />
+      <set href="#header/text" attributeName="text-buffer" to="Active Labor" />
+      <set href="#header/text" attributeName="fill" to="fb-magenta" />
+      <set href="#copy/text" attributeName="text-buffer" to="Time to head to the hospital!" />
+      <set href="#bottom-padding" attributeName="display" to="none" />
+    </use>
+    <use id="btnConfirm" href="#square-button" y="65%" fill="fb-magenta">
+      <set href="#text" attributeName="text-buffer" to="Got it!" />
     </use>
   </svg>
 </svg>

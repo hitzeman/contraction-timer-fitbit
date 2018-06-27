@@ -46,3 +46,7 @@ textarea {
   font-family: "Seville-Regular";
   font-size: 18;
 }
+
+.tile-list-item-avg {
+  height: 80;
+}
