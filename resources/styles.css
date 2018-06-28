@@ -1,3 +1,4 @@
+/* ---------- Globals ---------- */
 text {
   fill: white;
   font-family: "Seville-Book";
@@ -8,10 +9,43 @@ textarea {
   font-family: "Seville-Book";
 }
 
+.center {
+  x: "50%";
+  text-anchor: "middle";
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.half-x {
+  x: "50%";
+}
+
+.tile-divider-bottom {
+  x: 0;
+  width: 100%;
+  height: 2;
+  fill: #f83478;
+}
+
+/* ---------- Timer Section ---------- */
 #timer {
   font-size: 80;
   display-align: center;
   x: "21%";
+}
+
+#btn-tr {
+  fill: 'fb-black';
+}
+
+#btn-br {
+  fill: 'fb-white';
 }
 
 #previous {
@@ -20,15 +54,49 @@ textarea {
   y: "98%";
 }
 
-.tile-list-item {
-  height: 130;
+/* ---------- Average Section ---------- */
+#averages .tile-divider-bottom {
+  y: "50%+5"; 
+  fill: "#f83478";
 }
 
-.tile-divider-bottom {
-  x: 0;
-  width: 100%;
-  height: 2;
-  fill: #A0A0A0;
+#upper-section {
+  height: "50%"
+}
+
+#lower-section {
+  height: "50%"; 
+  y: "45%"
+}
+
+.tile-average-y {
+  y: "82%";
+}
+
+/* ---------- Details Section ---------- */
+#contraction-details {
+  width: "95%"; 
+  height: "95%"; 
+  x: "2.5%";
+  y: "2.5%";
+}
+
+#tile-label {
+  font-family: "Seville-Bold";
+  font-size: 19;
+  x: "5%";
+  y: "28%";
+}
+
+#tile-value {
+  font-family: "Seville-Regular";
+  font-size: 18;
+  x: "5%";
+  y: "45%";
+}
+
+.tile-list-item {
+  height: 130;
 }
 
 .tile-list-item text {
@@ -37,14 +105,8 @@ textarea {
   fill: white;
 }
 
-#tile-label {
-  font-family: "Seville-Bold";
-  font-size: 19;
-}
-
-#tile-value {
-  font-family: "Seville-Regular";
-  font-size: 18;
+#contraction-tile .tile-divider-bottom {
+  y: "100%-5"; 
 }
 
 .tile-list-item-avg {
@@ -53,4 +115,14 @@ textarea {
 
 .avg-small {
   font-size: 26;
+}
+
+/* ---------- Panorama View ---------- */
+#pagination-dots {
+  y: "8";
+}
+
+/* ---------- Notification Popup ---------- */
+#btn-confirm {
+  y: "65%";
 }
