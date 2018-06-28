@@ -1,14 +1,17 @@
 <svg>
   <defs>
-    <symbol id="no-contractions">
-      <svg id="noContractions" viewport-fill="black">
-        <use href="#mixed-text-center-mid" height="100%" fill="fb-yellow">
+    <!-- Symbol used to display text when zero contractions have been recorded  -->
+    <symbol id="symbol-no-contractions">
+      <svg id="zero-contractions" viewport-fill="black">
+        <use href="#mixed-text-center-mid" height="100%">
           <set href="#copy/text" attributeName="text-buffer" to="No contractions have been recorded." />
         </use>
       </svg>
     </symbol>
   </defs>
+  <!-- Main container -->
   <use id="container" href="#panoramaview" display="none">
+    <!-- Timer section -->
     <use id="section-timer" href="#panoramaview-item">
       <textarea id="timer">00:00</textarea>
       <use id="btn-tr" href="#combo-button-upper-right" fill="fb-black" display="none">
@@ -22,58 +25,62 @@
       </use>
       <text id="previous" display="none">00:00</text>
     </use>
+    <!-- Average section -->
     <use id="section-average" href="#panoramaview-item">
-      <use href="#no-contractions"></use>
+      <use href="#symbol-no-contractions"></use>
       <svg id="averages" display="none">
-        <use id="tile-average" href="#tile-list">
-          <use href="#tile-list-item" class="tile-list-item-avg">
-            <text>Contractions</text>
-            <text id="tile-average-contractions" x="55%">0</text>
-          </use>
-          <use href="#tile-list-item" class="tile-list-item-avg">
-            <text>Avg. Length</text>
-            <text id="tile-average-length" x="55%">00:00</text>
-          </use>
-          <use href="#tile-list-item" class="tile-list-item-avg">
-            <text>Frequency</text>
-            <text id="tile-average-frequency" x="55%">00:00</text>
-          </use>
-        </use>
+        <section height="50%">
+          <text id="tile-average-frequency" x="50%" text-anchor="middle">Frequency 00:00</text>
+        </section>
+        <rect class="tile-divider-bottom" y="50%+5" fill="#f83478"/>
+        <section height="50%" y="45%">
+          <section width="50%">
+            <text class="avg-small" x="50%" text-anchor="middle">Contractions</text>
+            <text class="avg-small" x="50%" y="82%" text-anchor="middle" id="tile-average-contractions">0</text>
+          </section>
+          <section width="50%" x="50%">
+            <text class="avg-small" x="50%" text-anchor="middle">Avg. Length</text>
+            <text class="avg-small" x="50%" y="82%" text-anchor="middle" id="tile-average-length">00:00</text>
+          </section>
+        </section>
       </svg>
     </use>
-    <use id="section-summary" href="#panoramaview-item">
-      <use href="#no-contractions"></use>
-      <svg id="contractionsSummary" width="95%" height="95%" x="2.5%" y="2.5%">
+    <!-- Details section -->
+    <use id="section-details" href="#panoramaview-item">
+      <use href="#symbol-no-contractions"></use>
+      <svg id="contraction-details" width="95%" height="95%" x="2.5%" y="2.5%">
         <defs>
-          <symbol id="stat">
+          <!-- Symbol for a contraction statistic -->
+          <symbol id="symbol-stat">
             <text id="tile-label" class="tile-label" x="5%" y="28%"></text>
             <text id="tile-value" x="5%" y="45%"></text>
           </symbol>
+          <!-- Symbol for a contraction detail which contains four contraction statistics -->
           <symbol id="contraction-tile" href="#tile-list-item" focusable="false" pointer-events="none" system-events="all" display="none">
-            <!-- REDO THIS -->
             <section>
-              <use href="#stat" id="tile-start">
+              <use href="#symbol-stat" id="tile-start">
                 <set href="tile-label" attributeName="text-buffer" to="START" />
                 <set href="tile-value" attributeName="text-buffer" to="00:00:00" />
               </use>
-              <use href="#stat" id="tile-end" x="50%">
+              <use href="#symbol-stat" id="tile-end" x="50%">
                 <set href="tile-label" attributeName="text-buffer" to="END" />
                 <set href="tile-value" attributeName="text-buffer" to="00:00:00" />
               </use>
-              <use href="#stat" id="tile-duration" y="40%">
+              <use href="#symbol-stat" id="tile-duration" y="40%">
                 <set href="tile-label" attributeName="text-buffer" to="DURATION" />
                 <set href="tile-value" attributeName="text-buffer" to="00:00" />
               </use>
-              <use href="#stat" id="tile-frequency" x="50%" y="40%">
+              <use href="#symbol-stat" id="tile-frequency" x="50%" y="40%">
                 <set href="tile-label" attributeName="text-buffer" to="FREQUENCY" />
                 <set href="tile-value" attributeName="text-buffer" to="00:00" />
               </use>
             </section>
             <section>
-              <rect id="tile-divider-bottom" class="tile-divider-bottom" y="100%-2" />
+              <rect id="tile-divider-bottom" class="tile-divider-bottom" y="100%-5" />
             </section>
           </symbol>
         </defs>
+         <!-- Tile list pool for displaying tile list item for each contraction-->
         <use id="tiles" href="#tile-list">
           <var id="virtual" value="1" />
           <var id="reorder-enabled" value="0" />
@@ -92,6 +99,7 @@
         </use>
       </svg>
     </use>
+    <!-- Panorama view containing three sections -->
     <use id="pagination-dots" href="#pagination-widget" y="8">
       <use href="#pagination-dot" />
       <use href="#pagination-dot" />
@@ -100,6 +108,7 @@
       <use href="#pagination-highlight-dot" />
     </use>
   </use>
+  <!-- Reset application popup to clear data and reset application to default state -->  
   <svg id="reset-popup" display="none">
     <rect class="full-size" fill="fb-black" />
     <use href="#mixed-text-center-mid" class="dialog-mixed-text" fill="fb-white">
@@ -109,16 +118,17 @@
       <set href="#copy/text" attributeName="text-buffer" to="All recorded contractions for this session will be cleared." />
       <set href="#bottom-padding" attributeName="display" to="none" />
     </use>
-    <use id="btnCancel" class="dialog-half-button-left" href="#square-button-neutral">
+    <use id="btn-cancel" class="dialog-half-button-left" href="#square-button-neutral">
       <set href="#text" attributeName="text-buffer" to="Cancel" />
       <set href="#text" attributeName="text-anchor" to="middle" />
     </use>
-    <use id="btnReset" class="dialog-half-button-right" href="#square-button-negative">
+    <use id="btn-reset" class="dialog-half-button-right" href="#square-button-negative">
       <set href="#text" attributeName="text-buffer" to="Reset" />
       <set href="#text" attributeName="text-anchor" to="middle" />
     </use>
   </svg>
-  <svg id="firstChild-popup" display="inline">
+  <!-- First child popup to determine whether this is the users first child -->  
+  <svg id="first-child-popup" display="inline">
     <rect class="full-size" fill="fb-black" />
     <use href="#mixed-text-center-mid" class="dialog-mixed-text" fill="fb-white">
       <set href="#top-padding" attributeName="display" to="none" />
@@ -126,15 +136,16 @@
       <set href="#header/text" attributeName="fill" to="fb-magenta" />
       <set href="#bottom-padding" attributeName="display" to="none" />
     </use>
-    <use id="btnYes" class="dialog-half-button-left" href="#square-button-neutral">
+    <use id="btn-yes" class="dialog-half-button-left" href="#square-button-neutral">
       <set href="#text" attributeName="text-buffer" to="Yes" />
       <set href="#text" attributeName="text-anchor" to="middle" />
     </use>
-    <use id="btnNo" class="dialog-half-button-right" href="#square-button-negative">
+    <use id="btn-no" class="dialog-half-button-right" href="#square-button-negative">
       <set href="#text" attributeName="text-buffer" to="No" />
       <set href="#text" attributeName="text-anchor" to="middle" />
     </use>
   </svg>
+  <!-- Notification popup which displays when user is in active labor --> 
   <svg id="notification-popup" display="none">
     <rect class="full-size" fill="fb-black" />
     <use href="#mixed-text-center-mid" class="dialog-mixed-text" fill="fb-white">
@@ -144,7 +155,7 @@
       <set href="#copy/text" attributeName="text-buffer" to="Time to head to the hospital!" />
       <set href="#bottom-padding" attributeName="display" to="none" />
     </use>
-    <use id="btnConfirm" href="#square-button" y="65%" fill="fb-magenta">
+    <use id="btn-confirm" href="#square-button" y="65%" fill="fb-magenta">
       <set href="#text" attributeName="text-buffer" to="Got it!" />
     </use>
   </svg>

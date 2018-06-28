@@ -14,19 +14,19 @@ const averages = document.getElementById("averages");
 const btnBR = document.getElementById("btn-br");
 const btnBRIcon = btnBR.getElementById("combo-button-icon");
 const btnBrIconPress = btnBR.getElementById("combo-button-icon-press");
-const btnCancel = document.getElementById("btnCancel");
-const btnConfirm = document.getElementById("btnConfirm");
-const btnNo = document.getElementById("btnNo");
-const btnReset = document.getElementById("btnReset");
+const btnCancel = document.getElementById("btn-cancel");
+const btnConfirm = document.getElementById("btn-confirm");
+const btnNo = document.getElementById("btn-no");
+const btnReset = document.getElementById("btn-reset");
 const btnTR = document.getElementById("btn-tr");
-const btnYes = document.getElementById("btnYes");
+const btnYes = document.getElementById("btn-yes");
 const container = document.getElementById("container");
-const contractionsSummary = document.getElementById("contractionsSummary");
-const firstChildPopup = document.getElementById("firstChild-popup");
+const contractionDetails = document.getElementById("contraction-details");
+const firstChildPopup = document.getElementById("first-child-popup");
 const sectionAverage = document.getElementById("section-average");
-const sectionSummary = document.getElementById("section-summary");
-const noContractions = sectionAverage.getElementById("noContractions");
-const summaryNoContractions = sectionSummary.getElementById("noContractions");
+const sectionDetails = document.getElementById("section-details");
+const zeroContractionsAverage = sectionAverage.getElementById("zero-contractions");
+const zeroContractionsSummary = sectionDetails.getElementById("zero-contractions");
 const notificationPopup = document.getElementById("notification-popup");
 const previous = document.getElementById("previous");
 const resetPopup = document.getElementById("reset-popup");
@@ -48,9 +48,9 @@ btnBR.onactivate = function () {
       seconds: seconds
     });
     
-    displayElement(noContractions, false);
-    displayElement(summaryNoContractions, false);
-    displayElement(contractionsSummary, true);
+    displayElement(zeroContractionsAverage, false);
+    displayElement(zeroContractionsSummary, false);
+    displayElement(contractionDetails, true);
     displayElement(averages, true);
     generateTiles();
     tiles.length = contractions.length;
@@ -87,7 +87,7 @@ btnReset.onclick = function (e) {
   renderView("container");
   displayElement(btnTR, false);
   displayElement(previous, false);
-  displayElement(contractionsSummary, false);
+  displayElement(contractionDetails, false);
 }
 
 btnNo.onclick = function(e) {
@@ -103,10 +103,10 @@ btnYes.onclick = function(e) {
 function updateAverages() {
   avgFrequency = getAverageFrequencies();
   avgSeconds = getAverageSeconds();
-  
+ 
+  tileFrequency.textContent = `Frequency ${utils.formatSeconds(avgFrequency)}`;
   tileTotalContractions.textContent = contractions.length;
   tileLength.textContent = utils.formatSeconds(avgSeconds);
-  tileFrequency.textContent = utils.formatSeconds(avgFrequency);
 }
 
 function displayNotification() {

@@ -50,3 +50,7 @@ textarea {
 .tile-list-item-avg {
   height: 80;
 }
+
+.avg-small {
+  font-size: 26;
+}
