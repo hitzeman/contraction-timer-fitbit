@@ -10,7 +10,7 @@ textarea {
 }
 
 .center {
-  x: "50%";
+  x: 50%;
   text-anchor: "middle";
 }
 
@@ -23,7 +23,7 @@ textarea {
 }
 
 .half-x {
-  x: "50%";
+  x: 50%;
 }
 
 .tile-divider-bottom {
@@ -37,62 +37,62 @@ textarea {
 #timer {
   font-size: 80;
   display-align: center;
-  x: "21%";
+  x: 21%;
 }
 
 #btn-tr {
-  fill: 'fb-black';
+  fill: "fb-black";
 }
 
 #btn-br {
-  fill: 'fb-white';
+  fill: "fb-white";
 }
 
 #previous {
   font-size: 40;
-  x: "2%";
-  y: "98%";
+  x: 2%;
+  y: 98%;
 }
 
 /* ---------- Average Section ---------- */
 #averages .tile-divider-bottom {
-  y: "50%+5"; 
+  y: 50%+5; 
   fill: "#f83478";
 }
 
 #upper-section {
-  height: "50%"
+  height: 50%;
 }
 
 #lower-section {
-  height: "50%"; 
-  y: "45%"
+  height: 50%; 
+  y: 45%;
 }
 
 .tile-average-y {
-  y: "82%";
+  y: 82%;
 }
 
 /* ---------- Details Section ---------- */
 #contraction-details {
-  width: "95%"; 
-  height: "95%"; 
-  x: "2.5%";
-  y: "2.5%";
+  width: 95%; 
+  height: 95%; 
+  x: 2.5%;
+  y: 2.5%;
 }
 
 #tile-label {
   font-family: "Seville-Bold";
   font-size: 19;
-  x: "5%";
-  y: "28%";
+  x: 5%;
+  y: 28%;
 }
 
 #tile-value {
   font-family: "Seville-Regular";
   font-size: 18;
-  x: "5%";
-  y: "45%";
+  x: 5%;
+  y: 45%;
 }
 
 .tile-list-item {
@@ -106,7 +106,7 @@ textarea {
 }
 
 #contraction-tile .tile-divider-bottom {
-  y: "100%-5"; 
+  y: 100%-5; 
 }
 
 .tile-list-item-avg {
@@ -119,10 +119,10 @@ textarea {
 
 /* ---------- Panorama View ---------- */
 #pagination-dots {
-  y: "8";
+  y: 8;
 }
 
 /* ---------- Notification Popup ---------- */
 #btn-confirm {
-  y: "65%";
+  y: 65%;
 }

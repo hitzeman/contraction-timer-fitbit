@@ -4,10 +4,10 @@ import * as utils from "../common/utils";
 
 /* Variables */
 let active = false;
-const contractions = [];
-let frequencies = [];
+let contractions = [];
+const frequencies = [];
 let avgFrequency, avgSeconds, intervalStart, intervalStop, isFirstChild;
-const seconds = 0;
+let seconds = 0;
 
 /* Element References */
 const averages = document.getElementById("averages");
@@ -23,18 +23,18 @@ const btnYes = document.getElementById("btn-yes");
 const container = document.getElementById("container");
 const contractionDetails = document.getElementById("contraction-details");
 const firstChildPopup = document.getElementById("first-child-popup");
-const sectionAverage = document.getElementById("section-average");
-const sectionDetails = document.getElementById("section-details");
-const zeroContractionsAverage = sectionAverage.getElementById("zero-contractions");
-const zeroContractionsSummary = sectionDetails.getElementById("zero-contractions");
 const notificationPopup = document.getElementById("notification-popup");
 const previous = document.getElementById("previous");
 const resetPopup = document.getElementById("reset-popup");
+const sectionAverage = document.getElementById("section-average");
+const sectionDetails = document.getElementById("section-details");
 const tiles = document.getElementById("tiles");
-const timer = document.getElementById("timer");
 const tileFrequency = document.getElementById("tile-average-frequency");
 const tileLength = document.getElementById("tile-average-length");
 const tileTotalContractions = document.getElementById("tile-average-contractions");
+const timer = document.getElementById("timer");
+const zeroContractionsAverage = sectionAverage.getElementById("zero-contractions");
+const zeroContractionsDetails = sectionDetails.getElementById("zero-contractions");
 
 /* Event Handlers */
 btnBR.onactivate = function () {
@@ -47,19 +47,12 @@ btnBR.onactivate = function () {
       stop: intervalStop,
       seconds: seconds
     });
-    
-    displayElement(zeroContractionsAverage, false);
-    displayElement(zeroContractionsSummary, false);
-    displayElement(contractionDetails, true);
-    displayElement(averages, true);
-    generateTiles();
-    tiles.length = contractions.length;
+
     updateAverages();
-    
+    updateDetails();
+
     resetTimer();
-    
     displayNotification();
-    
   } else {
     activate(true);
     timeInterval(true);
@@ -67,46 +60,62 @@ btnBR.onactivate = function () {
 
   displayElement(btnTR, contractions.length && !active)
   renderPreviousInterval();
-}
+};
 
 btnTR.onactivate = function () {
   resetTimer();
   renderView("reset");
-}
+};
 
-btnCancel.onclick = function (e) {
+btnCancel.onclick = function () {
   renderView("container");
-}
+};
 
-btnConfirm.onclick = function(e) {
+btnConfirm.onclick = function () {
   renderView("container");
-}
+};
 
-btnReset.onclick = function (e) {
+btnReset.onclick = function () {
   contractions = [];
   renderView("container");
   displayElement(btnTR, false);
   displayElement(previous, false);
   displayElement(contractionDetails, false);
-}
+  displayElement(averages, false);
+  displayElement(zeroContractionsAverage, true);
+  displayElement(zeroContractionsDetails, true);
+};
 
-btnNo.onclick = function(e) {
-  renderView("container");
+btnNo.onclick = function () {
   isFirstChild = false;
-}
-
-btnYes.onclick = function(e) {
   renderView("container");
+};
+
+btnYes.onclick = function () {
   isFirstChild = true;
-}
+  renderView("container");
+};
 
 function updateAverages() {
+  displayElement(zeroContractionsAverage, false);
+  displayElement(averages, true);
+  setAverages();
+}
+
+function setAverages() {
   avgFrequency = getAverageFrequencies();
   avgSeconds = getAverageSeconds();
- 
+
   tileFrequency.textContent = `Frequency ${utils.formatSeconds(avgFrequency)}`;
   tileTotalContractions.textContent = contractions.length;
   tileLength.textContent = utils.formatSeconds(avgSeconds);
+}
+
+function updateDetails() {
+  displayElement(zeroContractionsDetails, false);
+  displayElement(contractionDetails, true);
+  generateTiles();
+  tiles.length = contractions.length;
 }
 
 function displayNotification() {
@@ -133,33 +142,33 @@ function getAverageSeconds() {
 
 function generateTiles() {
   tiles.delegate = {
-  getTileInfo: function (index) {
-    return {
-      type: "contraction-pool",
-      value: contractions[index],
-      index: index
-    };
-  },
-  configureTile: function (tile, info) {
-    if (info.type === "contraction-pool") {
+    getTileInfo: function (index) {
+      return {
+        type: "contraction-pool",
+        value: contractions[index],
+        index: index
+      };
+    },
+    configureTile: function (tile, info) {
+      if (info.type === "contraction-pool") {
 
-      const tileDivider = tile.getElementById("tile-divider-bottom");      
-      const tileStartValue = tile.getElementById("tile-start").getElementById("tile-value");      
-      const tileEndValue = tile.getElementById("tile-end").getElementById("tile-value");
-      const tileDurationValue = tile.getElementById("tile-duration").getElementById("tile-value");            
-      const tileFrequencyValue = tile.getElementById("tile-frequency").getElementById("tile-value");
+        const tileDivider = tile.getElementById("tile-divider-bottom");
+        const tileStartValue = tile.getElementById("tile-start").getElementById("tile-value");
+        const tileEndValue = tile.getElementById("tile-end").getElementById("tile-value");
+        const tileDurationValue = tile.getElementById("tile-duration").getElementById("tile-value");
+        const tileFrequencyValue = tile.getElementById("tile-frequency").getElementById("tile-value");
 
-      tileStartValue.textContent = utils.formatTime(info.value.start);
-      tileEndValue.textContent = utils.formatTime(info.value.stop);
-      tileDurationValue.textContent = utils.formatSeconds(info.value.seconds);
-      frequencies[info.index] = calculateFrequency(info.index);
-      tileFrequencyValue.textContent = utils.formatSeconds(frequencies[info.index]);
+        tileStartValue.textContent = utils.formatTime(info.value.start);
+        tileEndValue.textContent = utils.formatTime(info.value.stop);
+        tileDurationValue.textContent = utils.formatSeconds(info.value.seconds);
+        frequencies[info.index] = calculateFrequency(info.index);
+        tileFrequencyValue.textContent = utils.formatSeconds(frequencies[info.index]);
 
-      tileDivider.style.fill = info.index % 2 === 0 ? "#f83478" : "#2490dd"
-      displayElement(tileDivider, info.index !== contractions.length - 1)
+        tileDivider.style.fill = info.index % 2 === 0 ? "#f83478" : "#2490dd";
+        displayElement(tileDivider, info.index !== contractions.length - 1);
+      }
     }
-  }
-}
+  };
 }
 
 function displayElement(element, renderFlag) {
@@ -245,5 +254,3 @@ function calculateFrequency(index) {
     return (previousStartTime - currentEndTime) / 1000;
   }
 }
-
-
