@@ -1,7 +1,8 @@
 import { preferences } from "user-settings";
 
 export function formatSeconds(seconds) {
-  return new Date(seconds * 1000).toISOString().substr(14, 5);
+  const date = new Date(seconds * 1000);
+  return `${padZero(date.getMinutes())}:${padZero(date.getSeconds())}`;
 }
 
 export function formatTime(date) {
@@ -14,3 +15,9 @@ export function formatTime(date) {
 function padZero(num) {
   return num < 10 ? `0${num}` : num;
 }
+
+Number.prototype.inRange = function(min, max) {
+  var num = this.valueOf();
+  return num >= min && num <= max;
+}
+

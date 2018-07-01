@@ -1,0 +1,27 @@
+import document from "document";
+
+export const averages = document.getElementById("averages");
+export const btnBR = document.getElementById("btn-br");
+export const btnBRIcon = btnBR.getElementById("combo-button-icon");
+export const btnBrIconPress = btnBR.getElementById("combo-button-icon-press");
+export const btnCancel = document.getElementById("btn-cancel");
+export const btnConfirm = document.getElementById("btn-confirm");
+export const btnNo = document.getElementById("btn-no");
+export const btnReset = document.getElementById("btn-reset");
+export const btnTR = document.getElementById("btn-tr");
+export const btnYes = document.getElementById("btn-yes");
+export const container = document.getElementById("container");
+export const contractionDetails = document.getElementById("contraction-details");
+export const firstChildPopup = document.getElementById("first-child-popup");
+export const notificationPopup = document.getElementById("notification-popup");
+export const previous = document.getElementById("previous");
+export const resetPopup = document.getElementById("reset-popup");
+export const sectionAverage = document.getElementById("section-average");
+export const sectionDetails = document.getElementById("section-details");
+export const tiles = document.getElementById("tiles");
+export const tileFrequency = document.getElementById("tile-average-frequency");
+export const tileLength = document.getElementById("tile-average-length");
+export const tileTotalContractions = document.getElementById("tile-average-contractions");
+export const timer = document.getElementById("timer");
+export const zeroContractionsAverage = sectionAverage.getElementById("zero-contractions");
+export const zeroContractionsDetails = sectionDetails.getElementById("zero-contractions");

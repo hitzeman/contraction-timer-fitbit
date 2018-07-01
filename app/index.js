@@ -1,5 +1,6 @@
 import clock from "clock";
-import document from "document";
+import { elementDisplayStates, MINIMUM_CONTRACTION_LENGTH, MINIMUM_CONTRACTIONS, FIRSTCHILD_MINIMUM_FREQUENCY, FIRSTCHILD_MAXIMUM_FREQUENCY, NOT_FIRSTCHILD_MINIMUM_FREQUENCY, NOT_FIRSTCHILD_MAXIMUM_FREQUENCY } from "../common/constants";
+import * as elements from "../common/elements";
 import * as utils from "../common/utils";
 
 /* Variables */
@@ -9,35 +10,8 @@ const frequencies = [];
 let avgFrequency, avgSeconds, intervalStart, intervalStop, isFirstChild;
 let seconds = 0;
 
-/* Element References */
-const averages = document.getElementById("averages");
-const btnBR = document.getElementById("btn-br");
-const btnBRIcon = btnBR.getElementById("combo-button-icon");
-const btnBrIconPress = btnBR.getElementById("combo-button-icon-press");
-const btnCancel = document.getElementById("btn-cancel");
-const btnConfirm = document.getElementById("btn-confirm");
-const btnNo = document.getElementById("btn-no");
-const btnReset = document.getElementById("btn-reset");
-const btnTR = document.getElementById("btn-tr");
-const btnYes = document.getElementById("btn-yes");
-const container = document.getElementById("container");
-const contractionDetails = document.getElementById("contraction-details");
-const firstChildPopup = document.getElementById("first-child-popup");
-const notificationPopup = document.getElementById("notification-popup");
-const previous = document.getElementById("previous");
-const resetPopup = document.getElementById("reset-popup");
-const sectionAverage = document.getElementById("section-average");
-const sectionDetails = document.getElementById("section-details");
-const tiles = document.getElementById("tiles");
-const tileFrequency = document.getElementById("tile-average-frequency");
-const tileLength = document.getElementById("tile-average-length");
-const tileTotalContractions = document.getElementById("tile-average-contractions");
-const timer = document.getElementById("timer");
-const zeroContractionsAverage = sectionAverage.getElementById("zero-contractions");
-const zeroContractionsDetails = sectionDetails.getElementById("zero-contractions");
-
 /* Event Handlers */
-btnBR.onactivate = function () {
+elements.btnBR.onactivate = function () {
   if (active) {
     activate(false);
     timeInterval(false);
@@ -58,47 +32,48 @@ btnBR.onactivate = function () {
     timeInterval(true);
   }
 
-  displayElement(btnTR, contractions.length && !active)
+  displayElement(elements.btnTR, contractions.length && !active)
   renderPreviousInterval();
 };
 
-btnTR.onactivate = function () {
+elements.btnTR.onactivate = function () {
   resetTimer();
   renderView("reset");
 };
 
-btnCancel.onclick = function () {
+elements.btnCancel.onclick = function () {
   renderView("container");
 };
 
-btnConfirm.onclick = function () {
+elements.btnConfirm.onclick = function () {
   renderView("container");
 };
 
-btnReset.onclick = function () {
+elements.btnReset.onclick = function () {
   contractions = [];
+  frequencies = [];
   renderView("container");
-  displayElement(btnTR, false);
-  displayElement(previous, false);
-  displayElement(contractionDetails, false);
-  displayElement(averages, false);
-  displayElement(zeroContractionsAverage, true);
-  displayElement(zeroContractionsDetails, true);
+  displayElement(elements.btnTR, false);
+  displayElement(elements.previous, false);
+  displayElement(elements.contractionDetails, false);
+  displayElement(elements.averages, false);
+  displayElement(elements.zeroContractionsAverage, true);
+  displayElement(elements.zeroContractionsDetails, true);
 };
 
-btnNo.onclick = function () {
+elements.btnNo.onclick = function () {
   isFirstChild = false;
   renderView("container");
 };
 
-btnYes.onclick = function () {
+elements.btnYes.onclick = function () {
   isFirstChild = true;
   renderView("container");
 };
 
 function updateAverages() {
-  displayElement(zeroContractionsAverage, false);
-  displayElement(averages, true);
+  displayElement(elements.zeroContractionsAverage, false);
+  displayElement(elements.averages, true);
   setAverages();
 }
 
@@ -106,42 +81,44 @@ function setAverages() {
   avgFrequency = getAverageFrequencies();
   avgSeconds = getAverageSeconds();
 
-  tileFrequency.textContent = `Frequency ${utils.formatSeconds(avgFrequency)}`;
-  tileTotalContractions.textContent = contractions.length;
-  tileLength.textContent = utils.formatSeconds(avgSeconds);
+  elements.tileFrequency.textContent = `Frequency ${utils.formatSeconds(avgFrequency)}`;
+  elements.tileTotalContractions.textContent = contractions.length;
+  elements.tileLength.textContent = utils.formatSeconds(avgSeconds);
 }
 
 function updateDetails() {
-  displayElement(zeroContractionsDetails, false);
-  displayElement(contractionDetails, true);
+  displayElement(elements.zeroContractionsDetails, false);
+  displayElement(elements.contractionDetails, true);
   generateTiles();
-  tiles.length = contractions.length;
+  elements.tiles.length = contractions.length;
 }
 
 function displayNotification() {
-  if (avgSeconds > 45 && contractions.length >= 4 && (isFirstChild && avgFrequency >= 180 && avgFrequency < 300) || (!isFirstChild && avgFrequency >= 300 && avgFrequency < 420)) {
-    renderView("notification");
+  if(avgSeconds > MINIMUM_CONTRACTION_LENGTH && contractions.length >= MINIMUM_CONTRACTIONS){
+    if(isFirstChild && avgFrequency.inRange(FIRSTCHILD_MINIMUM_FREQUENCY, FIRSTCHILD_MAXIMUM_FREQUENCY)) {
+        renderView("notification");
+    }
+  } else if (!isFirstChild && avgFrequency.inRange(NOT_FIRSTCHILD_MINIMUM_FREQUENCY, NOT_FIRSTCHILD_MAXIMUM_FREQUENCY)) {
+        renderView("notification");
   }
 }
 
 function getAverageFrequencies() {
-  let sum = 0;
-  for (var i = 0; i < frequencies.length; i++) {
-    sum += frequencies[i];
+  if (frequencies.length === 1) {
+    return 0;
   }
-  return frequencies.length === 1 ? 0 : sum / (frequencies.length - 1);
+  
+  const sum = frequencies.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  return sum / (frequencies.length - 1);
 }
 
 function getAverageSeconds() {
-  let secs = 0;
-  for (var i = 0; i < contractions.length; i++) {
-    secs += contractions[i].seconds;
-  }
-  return secs / contractions.length;
+  const seconds = contractions.reduce((accumulator, currentValue) => accumulator + currentValue.seconds, 0);
+  return seconds / contractions.length;
 }
 
 function generateTiles() {
-  tiles.delegate = {
+  elements.tiles.delegate = {
     getTileInfo: function (index) {
       return {
         type: "contraction-pool",
@@ -176,41 +153,21 @@ function displayElement(element, renderFlag) {
 }
 
 function renderPreviousInterval() {
-  displayElement(previous, contractions.length);
+  displayElement(elements.previous, contractions.length);
   if (contractions.length) {
-    previous.textContent = utils.formatSeconds(contractions[0].seconds);
+    elements.previous.textContent = utils.formatSeconds(contractions[0].seconds);
   }
 }
 
+function setElementsDisplayValues(states) {
+  elements.firstChildPopup.style.display = states[0];
+  elements.notificationPopup.style.display = states[1];
+  elements.resetPopup.style.display = states[2];
+  elements.container.style.display = states[3];
+}
+
 function renderView(view) {
-  switch (view) {
-    case "container":
-      firstChildPopup.style.display = "none";
-      notificationPopup.style.display = "none";
-      resetPopup.style.display = "none";
-      container.style.display = "inline";
-      break;
-    case "firstChild": {
-      firstChildPopup.style.display = "inline";
-      notificationPopup.style.display = "none";
-      resetPopup.style.display = "none";
-      container.style.display = "none";
-      break;
-    }
-    case "notification": {
-      firstChildPopup.style.display = "none";
-      notificationPopup.style.display = "inline";
-      resetPopup.style.display = "none";
-      container.style.display = "none";
-      break;
-    }
-    case "reset":
-      firstChildPopup.style.display = "none";
-      notificationPopup.style.display = "none";
-      resetPopup.style.display = "inline";
-      container.style.display = "none";
-      break;
-  }
+  setElementsDisplayValues(elementDisplayStates[view]);
 }
 
 function activate(activeFlag) {
@@ -223,8 +180,8 @@ function activate(activeFlag) {
 
   const buttonMode = active ? 'x' : 'play';
 
-  btnBRIcon.image = `icons/btn_combo_${buttonMode}_p.png`;
-  btnBrIconPress.image = `icons/btn_combo_${buttonMode}_press_p.png`;
+  elements.btnBRIcon.image = `icons/btn_combo_${buttonMode}_p.png`;
+  elements.btnBrIconPress.image = `icons/btn_combo_${buttonMode}_press_p.png`;
 }
 
 function timeInterval(timeFlag) {
@@ -232,7 +189,7 @@ function timeInterval(timeFlag) {
     clock.granularity = "seconds";
     clock.ontick = function () {
       seconds++;
-      timer.textContent = utils.formatSeconds(seconds);
+      elements.timer.textContent = utils.formatSeconds(seconds);
     }
   } else {
     // Stop counting by no longer emitting event
@@ -242,7 +199,7 @@ function timeInterval(timeFlag) {
 
 function resetTimer() {
   seconds = 0;
-  timer.textContent = utils.formatSeconds(seconds);
+  elements.timer.textContent = utils.formatSeconds(seconds);
 }
 
 function calculateFrequency(index) {
